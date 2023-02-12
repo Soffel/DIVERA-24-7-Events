@@ -1,28 +1,13 @@
-﻿using Extensions;
-using System;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 
 namespace Client
 {
-    partial class api_v2_eventClient
+    public sealed class EventClient : api_v2_eventClient
     {
-        protected string APIKey {get; set;}
-        
-        void PrepareRequest(HttpClient client, HttpRequestMessage request,StringBuilder urlBuilder)
+        public EventClient(ClientConfig config) : base(new HttpClient())
         {
-            if (!APIKey.IsNullOrWhiteSpace())
-                urlBuilder.Append("?accesskey=" + APIKey);
+            BaseUrl = config.Url;
+            APIKey = config.ApiKey;    
         }
-
-    }
-    public class EventClient : api_v2_eventClient
-    {
-        public EventClient(string Key = "") : base(new HttpClient())
-        {
-          APIKey = Key;
-        }
-
-   
     }
 }
